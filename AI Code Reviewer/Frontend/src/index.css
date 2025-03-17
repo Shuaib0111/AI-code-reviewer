@@ -93,7 +93,7 @@ main {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #4caf50, #2e7d32);
+  background: linear-gradient(180deg, #5caf50, #2e7d32);
   border-radius: 10px;
 }
 
