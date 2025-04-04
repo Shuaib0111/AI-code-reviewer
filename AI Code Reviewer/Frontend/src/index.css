@@ -1,3 +1,4 @@
+/* RESET */
 * {
   margin: 0;
   padding: 0;
@@ -11,41 +12,48 @@ html, body, #root {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: "Fira Code", monospace;
 }
 
+/* MAIN CONTAINER */
 main {
-  height: 90vh;
   width: 95%;
+  max-width: 1400px;
+  height: auto;
   padding: 1.5rem;
   display: flex;
-  gap: 0.5rem;
+  flex-direction: row;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
+/* LEFT PANEL */
 .left {
-  width: 40%;
+  flex: 1;
+  min-width: 300px;
+  max-width: 600px;
   background-color: black;
-  padding: 10px;
+  padding: 15px;
   border-radius: 0.5rem;
   border: 2px solid #ddd;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  justify-content: space-between; 
+  min-height: 60vh;               
 }
 
 
+/* CODE EDITOR */
 .left .code {
-  flex: 1;
-  min-height: 50vh;
-  max-height: 80vh;
-  overflow-y: auto !important; 
-  padding: 10px;
-  background-color: rgb(30, 30, 30);
-  border-radius: 5px;
-  white-space: pre-wrap;
-  word-break: break-word;
+  flex-grow: 1;
+  overflow-y: auto;
+  min-height: 300px;
+  max-height: 60vh;
 }
 
 
+/* REVIEW BUTTON */
 .review {
   background: linear-gradient(135deg, #4caf50, #2e7d32);
   color: white;
@@ -53,7 +61,6 @@ main {
   border-radius: 0.7rem;
   cursor: pointer;
   font-weight: 600;
-  font-family: sans-serif;
   text-align: center;
   margin-top: 10px;
   transition: all 0.3s ease;
@@ -65,26 +72,26 @@ main {
   transform: scale(1.05);
 }
 
-
+/* RIGHT PANEL */
 .right {
-  width: 60%;
+  flex: 1;
+  min-width: 300px;
+  max-width: 800px;
   background-color: rgb(92, 92, 92);
-  padding: 1rem 2rem;
+  padding: 1rem 1.5rem;
   border-radius: 5px;
   color: white;
   overflow-y: auto;
-  flex: 1;
   font-size: 1rem;
-  font-family: "Fira Code", monospace;
   box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
   min-height: 50vh;
-  max-height: 80vh;
+  max-height: 75vh;
 }
 
-
+/* SCROLLBARS */
 ::-webkit-scrollbar {
-  width: 8px; 
-  height: 8px; 
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -99,4 +106,88 @@ main {
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #66bb6a, #388e3c);
+}
+
+/* LOADER */
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #61dafb;
+  text-align: center;
+}
+
+.spinner {
+  border: 6px solid #ccc;
+  border-top: 6px solid #61dafb;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 10px;
+}
+
+.loader-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #61dafb;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* RESPONSIVE DESIGN */
+
+/* Tablets and smaller (up to 1024px) */
+@media (max-width: 1024px) {
+  main {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .left, .right {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .left .code, .right {
+    max-height: none;
+    min-height: auto;
+  }
+}
+
+/* Mobile Devices (up to 600px) */
+@media (max-width: 600px) {
+  main {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .left .code {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .review {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .loader-text {
+    font-size: 1rem;
+  }
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+  }
+
+  .right {
+    padding: 1rem;
+    font-size: 0.95rem;
+  }
 }

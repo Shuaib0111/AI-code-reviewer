@@ -6,6 +6,7 @@ import axios from "axios";
 import Markdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/github-dark.css";
+import "./App.css"; // Make sure this is imported
 
 function App() {
   const [code, setCode] = useState(`function fetchData() {
@@ -13,12 +14,14 @@ function App() {
 }`);
 
   const [review, setReview] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setTimeout(() => prism.highlightAll(), 0);
   }, [code]);
 
   const reviewCode = async () => {
+    setLoading(true);
     try {
       const res = await axios.post("http://localhost:8000/ai/get-review", { code });
       if (res) {
@@ -28,11 +31,13 @@ function App() {
       }
     } catch (err) {
       alert(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <main>
+    <main className="app-container">
       <div className="left">
         <div className="code">
           <Editor
@@ -45,8 +50,8 @@ function App() {
               fontSize: 16,
               border: "2px solid #ddd",
               borderRadius: "5px",
-              minHeight: "10vh", 
-              overflowY: "auto", 
+              minHeight: "10vh",
+              overflowY: "auto",
               width: "100%",
               color: "wheat",
               backgroundColor: "black",
@@ -61,7 +66,14 @@ function App() {
         </div>
       </div>
       <div className="right">
-        <Markdown rehypePlugins={[rehypeHighlight]}>{review}</Markdown>
+        {loading ? (
+          <div className="loader-container">
+            <div className="spinner"></div>
+            <p className="loader-text">Analyzing...</p>
+          </div>
+        ) : (
+          <Markdown rehypePlugins={[rehypeHighlight]}>{review}</Markdown>
+        )}
       </div>
     </main>
   );
